@@ -35,7 +35,7 @@ carbon-electrolyte-interface/
 ### Python tool: 
 [`carbonstructures`](https://github.com/YueGroup/carbonstructures)
 
-> This external package was used to build functionalized graphene surfaces. Clone and install from its own repository if needed.
+This external package was used to build functionalized graphene surfaces. Clone and install from its own repository if needed.
 
 ---
 
