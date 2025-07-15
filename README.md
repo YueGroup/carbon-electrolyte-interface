@@ -10,7 +10,7 @@ Cornell University
 
 ## Project Overview
 
-This study explores how chemical functionalization of graphene surfaces modulates the structure and dynamics of confined aqueous NaCl electrolytes. Using molecular dynamics (MD) simulations, we investigate a matrix of functional group types (–COOH, –OH, =O, –CH₃), surface coverages, and NaCl concentrations.
+This study explores how chemical functionalization of graphene surfaces modulates the structure and dynamics of confined aqueous NaCl electrolytes. Using molecular dynamics (MD) simulations, we investigate a matrix of functional group types (–COOH, –OH, =O, –CH₃), surface coverages, and electrolyte concentrations.
 
 We also introduce [`carbonstructures`](https://github.com/YueGroup/carbonstructures), an open-source Python tool developed to generate functionalized graphene structures for simulation.
 
