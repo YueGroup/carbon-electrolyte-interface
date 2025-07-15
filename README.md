@@ -6,15 +6,11 @@ This repository contains molecular simulation inputs, analysis scripts, and data
 Lyndon Hess, Nhi P.T. Nguyen, et al.  
 Cornell University
 
----
-
 ## Project Overview
 
 This study explores how chemical functionalization of graphene surfaces modulates the structure and dynamics of confined aqueous NaCl electrolytes. Using molecular dynamics (MD) simulations, we investigate a matrix of functional group types (–COOH, –OH, =O, –CH₃), surface coverages, and electrolyte concentrations.
 
 We also introduce [`carbonstructures`](https://github.com/YueGroup/carbonstructures), an open-source Python tool developed to generate functionalized graphene structures for simulation.
-
----
 
 ## Repository Structure
 
@@ -28,16 +24,12 @@ carbon-electrolyte-interface/
 └── README.md         # This file
 ```
 
----
-
 ## Dependencies
 
 ### Python tool: 
 [`carbonstructures`](https://github.com/YueGroup/carbonstructures)
 
 This external package was used to build functionalized graphene surfaces. Clone and install from its own repository if needed.
-
----
 
 ## Usage
 
@@ -53,19 +45,13 @@ Run scripts in `analysis/` to compute:
 - Interfacial and bulk diffusion coefficients
 - Figure generation (e.g., heatmaps, line plots)
 
----
-
 ## Figures
 
 All plots shown in the manuscript are available in `figures/`. Each figure corresponds to a panel in the Results & Discussion section. See `figures/README.md` for descriptions.
 
----
-
 ## License
 
 This repository is released under the **MIT License**. See `LICENSE` file for details.
-
----
 
 ## Citation & Data Availability
 
