@@ -1,6 +1,0 @@
-numpy
-pandas
-matplotlib
-scipy
-MDAnalysis
-# carbonstructures — clone from https://github.com/YueGroup/carbonstructures
