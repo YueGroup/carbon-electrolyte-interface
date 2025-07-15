@@ -8,7 +8,7 @@ Cornell University
 
 ---
 
-## 🔬 Project Overview
+## Project Overview
 
 This study explores how chemical functionalization of graphene surfaces modulates the structure and dynamics of confined aqueous NaCl electrolytes. Using molecular dynamics (MD) simulations, we investigate a matrix of functional group types (–COOH, –OH, =O, –CH₃), surface coverages, and NaCl concentrations.
 
@@ -16,7 +16,7 @@ We also introduce [`carbonstructures`](https://github.com/YueGroup/carbonstructu
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
 carbon-electrolyte-interface/
@@ -30,24 +30,16 @@ carbon-electrolyte-interface/
 
 ---
 
-## 📦 Dependencies
+## Dependencies
 
-### Python environment setup:
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
-
-Additional tool used:  
-🔗 [`carbonstructures`](https://github.com/YueGroup/carbonstructures)
+### Python tool: 
+[`carbonstructures`](https://github.com/YueGroup/carbonstructures)
 
 > This external package was used to build functionalized graphene surfaces. Clone and install from its own repository if needed.
 
 ---
 
-## 🚀 Usage
+## Usage
 
 ### 1. Structure Generation
 Use [`carbonstructures`](https://github.com/YueGroup/carbonstructures) to generate graphene sheets with desired functional groups and coverage.
@@ -63,19 +55,19 @@ Run scripts in `analysis/` to compute:
 
 ---
 
-## 📊 Figures
+## Figures
 
 All plots shown in the manuscript are available in `figures/`. Each figure corresponds to a panel in the Results & Discussion section. See `figures/README.md` for descriptions.
 
 ---
 
-## 📄 License
+## License
 
 This repository is released under the **MIT License**. See `LICENSE` file for details.
 
 ---
 
-## 🧠 Citation & Data Availability
+## Citation & Data Availability
 
 If you use this toolkit or structure generation method in your work, please cite:
 
@@ -83,4 +75,4 @@ If you use this toolkit or structure generation method in your work, please cite
 
 All data and scripts are available via this GitHub repository. For questions, contact:
 
-📧 [shuwen.yue@cornell.edu](mailto:shuwen.yue@cornell.edu)
+[shuwen.yue@cornell.edu](mailto:shuwen.yue@cornell.edu)
