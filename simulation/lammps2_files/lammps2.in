@@ -1,0 +1,135 @@
+# input as lammps2.in -v nnacl 9 -v nfunc 16 -v functional OH -v trial 1
+
+variable        dt  equal 1.0 # units fs
+variable        T  equal  300 # units K
+variable        Tdamp  equal 100*${dt} # units K
+variable        P  equal 1.0 # units atm
+variable        Pdamp  equal 1000*${dt} # units atm
+variable        nsteps  equal  15000000 # number of simulation steps
+variable        thermo_freq equal 1000
+variable        dump_freq equal 1000
+variable        nwater equal 500
+variable        nc_per_graphene equal 364
+# CHANGE BELOW
+variable        home string "/home/fs01/lth26/Projects/graphene_sandwich_project/automation_run" # where lammps2_files directory is located
+# CHANGE ABOVE
+
+units           real
+atom_style      full
+boundary        p p p
+
+variable        water_file string "${home}/${functional}/water_input/water_500_${nnacl}nacl.data"
+variable        graphene_file string "${home}/${functional}/graphene_input_${functional}_${trial}/graphene_${nfunc}${functional}_${trial}.data"
+read_data       ${water_file}
+read_data       ${graphene_file} add append offset 4 0 0 0 0
+
+variable        functional_masses_charges string "${home}/${functional}/${functional}_masses_charges.txt"
+include         ${functional_masses_charges}
+
+
+neighbor        2.0 bin
+neigh_modify    every 15 delay 0 check yes
+
+pair_style      lj/cut/coul/long 10 10
+pair_modify     tail yes
+kspace_style    pppm 1.0e-5
+
+variable        functional_FF string "${home}/${functional}/${functional}_FF.txt"
+include         ${functional_FF}
+
+pair_modify mix arithmetic
+
+bond_style   harmonic
+angle_style  harmonic
+
+bond_coeff      1  5000 1.0
+angle_coeff     1  500 109.47
+
+# -- groups --
+variable        begin_water equal 1
+variable        end_water equal 3*${nwater}+2*${nnacl}
+variable        begin_wall1 equal ${end_water}+1
+variable        end_wall1 equal ${end_water}+${nc_per_graphene}+${size_func}*${nfunc}
+variable        begin_wall2 equal ${end_wall1}+1
+variable        end_wall2 equal ${end_wall1}+${nc_per_graphene}+${size_func}*${nfunc}
+
+variable        begin_wall1_c equal ${begin_wall1}
+variable        end_wall1_c equal ${begin_wall1}+${nc_per_graphene}-1
+variable        begin_wall2_c equal ${begin_wall2}
+variable        end_wall2_c equal ${begin_wall2}+${nc_per_graphene}-1
+variable        begin_wall1_f equal ${end_wall1_c}+1
+variable        end_wall1_f equal ${end_wall1}
+variable        begin_wall2_f equal ${end_wall2_c}+1
+variable        end_wall2_f equal ${end_wall2}
+
+group           water id ${begin_water}:${end_water}
+group           wall1 id ${begin_wall1}:${end_wall1}
+group           wall2 id ${begin_wall2}:${end_wall2}
+
+group           wall1_c id ${begin_wall1_c}:${end_wall1_c}
+group           wall2_c id ${begin_wall2_c}:${end_wall2_c}
+
+group           wall1_f id ${begin_wall1_f}:${end_wall1_f} # functionals
+group           wall2_f id ${begin_wall2_f}:${end_wall2_f}
+
+
+velocity        water create ${T} 2389174 rot yes dist gaussian # change seed for UNFUNC trials to ensure independent
+velocity        all zero linear
+velocity        all zero angular
+
+# displacement wall 1 = (15.8624 - 0)/10000 if displacement over 10000 dt steps, over nequilsteps
+# displacement wall 2 = (35.6105 - 50)/10000 if displacement over 10000 dt steps
+variable 	wall_positions string '${home}/${functional}/wall_positions/${nfunc}${functional}_${nnacl}nacl_trial${trial}_positions.txt'
+include		${wall_positions}
+# Apply displacements gradually
+fix move_wall1 wall1 move linear 0.0 0.0 ${shift1_rate} units box
+fix move_wall2 wall2 move linear 0.0 0.0 ${shift2_rate} units box
+
+# move water
+fix             1 water shake 0.0001 20 0 b 1 a 1
+fix             2 water nvt temp ${T} ${T} ${Tdamp}
+fix             3 water momentum 100 linear 1 1 1 rescale # remove com
+
+# -- equiliberate --
+variable        dump_string_equil string "./dump_equil2/dump_equil2_${nfunc}${functional}_${nnacl}nacl_trial${trial}.lammpstrj"
+dump            1 all custom ${dump_freq} ${dump_string_equil} id mol type x y z
+dump_modify     1 append yes sort id format line "%d %d %d %15.8f %15.8f %15.8f"
+
+timestep        1.0
+run             10000
+
+undump 1
+unfix move_wall1
+unfix move_wall2
+
+# fix sheets
+fix            piston1xy wall1 setforce 0.0 0.0 0.0
+velocity wall1 set 0.0 0.0 0.0
+fix            piston2xy wall2 setforce 0.0 0.0 0.0
+velocity wall2 set 0.0 0.0 0.0
+
+
+# --  production --
+reset_timestep  0
+timestep        ${dt}
+
+
+# compute temperature for water group
+compute        temp_water water temp
+
+thermo_style    custom step c_temp_water pe ke etotal density vol
+thermo          ${thermo_freq}
+thermo_modify   flush yes temp temp_water
+
+variable        dump_string_prod_unwrapped string "./dump_prod2_unwrapped/dump_prod2_unwrapped_${nfunc}${functional}_${nnacl}nacl_trial${trial}.lammpstrj"
+variable        dump_string_prod_wrapped string "./dump_prod2_wrapped/dump_prod2_wrapped_${nfunc}${functional}_${nnacl}nacl_trial${trial}.lammpstrj"
+dump            2 all custom ${dump_freq} ${dump_string_prod_unwrapped} id mol type xu yu zu ix iy iz
+dump_modify     2 append yes sort id format line "%d %d %d %15.8f %15.8f %15.8f %d %d %d"
+dump            3 all custom ${dump_freq} ${dump_string_prod_wrapped} id mol type x y z ix iy iz
+dump_modify     3 append yes sort id format line "%d %d %d %15.8f %15.8f %15.8f %d %d %d"
+
+
+run             ${nsteps}
+
+variable	restart_string string "./restart_run2/restart_run2_${nfunc}${functional}_${nnacl}nacl_trial${trial}"
+write_restart   ${restart_string}

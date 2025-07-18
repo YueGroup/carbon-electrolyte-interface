@@ -1,0 +1,6 @@
+Atom type mapping:
+  type 1 = C
+
+Atom ID ranges (offset by water) for LAMMPS group commands:
+group wall1 id 1500 1863
+group wall2 id 1864 2227

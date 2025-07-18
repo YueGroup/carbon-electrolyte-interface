@@ -1,0 +1,14 @@
+mass            1 15.9994 # O
+mass            2 1.00794 # H
+mass            3 35.453 # Cl
+mass            4 22.989769 # Na
+mass            5 12.0107 # C
+mass            6 15.9994 # O in -OH
+mass            7 1.00794 # H in -OH
+mass            8 12.0107 # C functionalized
+
+set type 6 charge  -0.54 # O in OH
+set type 7 charge  0.42 # H in OH
+set type 8 charge 0.12 # C functionalized
+
+variable        size_func equal 2
