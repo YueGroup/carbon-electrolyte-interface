@@ -3,4 +3,9 @@ pandas
 matplotlib
 scipy
 MDAnalysis
+os
+subprocess
+time
+argparse
 # carbonstructures — clone from https://github.com/YueGroup/carbonstructures
+# LAMMPS - 23Jun2022 - download from https://www.lammps.org/#gsc.tab=0
