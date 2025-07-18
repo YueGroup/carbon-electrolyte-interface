@@ -15,7 +15,7 @@ simulation/
 ├── CH3/          # -CH3 input files
 ├── UNFUNC/          # Unfunctionalized input files
 ├── submit_files.py/          # Python script to submit lammps1, sheet distance, or lammps2 files
-├── groups.py/          # Modified groups.py file for generating initial configurations: `carbonstructures/src/carbonstructures/functionalization`
+├── groups.py/          # Modified groups.py file for generating initial configurations: `carbonstructures/src/carbonstructures/generate/functionalization/`
 └── README.md         # This file
 ```
 
