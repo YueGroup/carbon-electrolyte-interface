@@ -1,0 +1,8 @@
+pair_coeff  1 1 0.1553 3.166 # OO SPCE
+pair_coeff  2 2 0.0 0.0 # HH SPCE
+pair_coeff  3 3 0.012785 4.8305 #ClCl
+pair_coeff  4 4 0.3526 2.1595 # NaNa
+pair_coeff  5 5 0.065965583 3.469 # CC
+pair_coeff  6 6 0.06605 3.5 # C_ch3C_ch3 Functionalized
+pair_coeff  7 7 0.030025 2.5 # HH Functionalized
+pair_coeff  8 8 0.07007 3.55 # CC Functionalized
