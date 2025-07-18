@@ -1,0 +1,18 @@
+mass            1 15.9994 # O
+mass            2 1.00794 # H
+mass            3 35.453 # Cl
+mass            4 22.989769 # Na
+mass            5 12.0107 # C
+mass            6 12.0107 # C in -COOH
+mass            7 15.9994 # O_C in -COOH
+mass            8 15.9994 # O_H in -COOH
+mass            9 1.00794 # H in -COOH
+mass            10 12.0107 # C functionalized
+
+set type 6 charge 0.55
+set type 7 charge -0.5
+set type 8 charge -0.58
+set type 9 charge 0.45
+set type 10 charge 0.08
+
+variable size_func equal 4

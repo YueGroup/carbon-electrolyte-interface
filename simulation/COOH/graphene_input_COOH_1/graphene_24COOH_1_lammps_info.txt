@@ -1,0 +1,19 @@
+Atom type mapping:
+  type 1 = C
+  type 2 = C_COOH
+  type 3 = O
+  type 4 = O
+  type 5 = H
+  type 6 = C_sheet_func
+
+Atom ID ranges (offset by water) for LAMMPS group commands:
+group water      id 1:1500
+
+group wall1      id 1501:1960
+group wall2      id 1961:2420
+
+group wall1_carbons    id 1501:1864
+group wall2_carbons    id 1961:2324
+
+group wall1_functionals  id 1865:1960
+group wall2_functionals  id 2325:2420
