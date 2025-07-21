@@ -63,7 +63,7 @@ def process_dat_file(filepath, wall1, wall2):
         return df_folded[["z_wall_nm", "density (g/cm^3)"]]
 
     except Exception as e:
-        print(f"⚠️ Error processing {filepath}: {e}")
+        print(f" Error processing {filepath}: {e}")
         return None
 
 # === Main Processing ===
@@ -82,7 +82,7 @@ for fname in os.listdir(WORKDIR):
     wall1, wall2 = extract_wall_positions(summary_path)
 
     if wall1 is None or wall2 is None:
-        print(f"❌ Skipping {fname}: wall positions not found.")
+        print(f" Skipping {fname}: wall positions not found.")
         continue
 
     input_path = os.path.join(WORKDIR, fname)
