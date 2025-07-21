@@ -3,7 +3,7 @@
 This repository contains molecular simulation inputs, analysis scripts, and data processing tools used in:
 
 **“How Surface Functionalization Controls Confined Electrolyte Structure and Dynamics at Graphene Interfaces”**  
-Lyndon Hess, Nhi P.T. Nguyen, et al.  
+Lyndon T. M. Hess, Nhi P. T. Nguyen, et al.  
 Cornell University
 
 ## Project Overview
