@@ -19,7 +19,7 @@ carbon-electrolyte-interface/
 ├── simulation/       # LAMMPS input scripts and run templates
 ├── analysis/         # Python scripts to analyze trajectories
 ├── figures/          # Publication-ready figures
-├── requirements.txt  # Python dependencies for analysis
+├── requirements.txt  # Python dependencies for simulation and analysis
 ├── .gitignore        # Ignored files (e.g., dumps, logs)
 └── README.md         # This file
 ```
