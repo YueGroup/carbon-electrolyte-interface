@@ -2,7 +2,7 @@
 
 This repository contains molecular simulation inputs, analysis scripts, and data processing tools used in:
 
-**“Tuning Interfacial Electrolyte Structure and Dynamics via Surface Functionalization of Graphene”**  
+**“How Surface Functionalization Controls Confined Electrolyte Structure and Dynamics at Graphene Interfaces”**  
 Lyndon Hess, Nhi P.T. Nguyen, et al.  
 Cornell University
 
