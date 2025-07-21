@@ -1,0 +1,76 @@
+# === Settings ===
+units           real
+atom_style      full
+boundary        p p p
+
+# === Paths to data files ===
+variable        WATER_FILE string "${SIM_DIR}/${FUNCTIONAL}/water_input/water_${NWATER}_${NNACL}nacl.data"
+variable        GRAPHENE_FILE string "${SIM_DIR}/${FUNCTIONAL}/graphene_input_${FUNCTIONAL}_${TRIAL}/graphene_${NFUNC}${FUNCTIONAL}_${TRIAL}.data"
+variable        MASSES_FILE string "${SIM_DIR}/${FUNCTIONAL}/${FUNCTIONAL}_masses_charges.txt"
+
+read_data       ${WATER_FILE}
+read_data       ${GRAPHENE_FILE} add append offset 4 0 0 0 0
+
+# === Include only mass definitions
+shell grep '^mass' ${MASSES_FILE} > masses_only.txt
+include masses_only.txt
+
+# === Read wall positions from generated include file
+include ${WALLVARFILE}
+
+# === Define slabs (3 Å < d < 6 Å from walls)
+variable slab1_lo equal ${wall1}+3.0
+variable slab1_hi equal ${wall1}+6.0
+variable slab2_lo equal ${wall2}-6.0
+variable slab2_hi equal ${wall2}-3.0
+
+region slab1 block INF INF INF INF ${slab1_lo} ${slab1_hi} units box
+region slab2 block INF INF INF INF ${slab2_lo} ${slab2_hi} units box
+group slab1_atoms region slab1
+group slab2_atoms region slab2
+group slab_atoms union slab1_atoms slab2_atoms
+
+# === Define groups
+group water type 1 2
+group na type 4
+group cl type 3
+
+group water_slab intersect water slab_atoms
+group na_slab intersect na slab_atoms
+group cl_slab intersect cl slab_atoms
+
+# === Neighbor settings
+comm_modify cutoff 10.0
+neighbor 2.0 bin
+neigh_modify delay 0 every 1 check yes
+
+# === MSD with COM
+compute msd_water water_slab msd com yes
+compute msd_na    na_slab    msd com yes
+compute msd_cl    cl_slab    msd com yes
+
+# === Variables for MSD
+variable msd1 equal c_msd_water[1]
+variable msd2 equal c_msd_water[2]
+variable msd3 equal c_msd_water[3]
+variable msd4 equal c_msd_water[4]
+
+variable msd_na1 equal c_msd_na[1]
+variable msd_na2 equal c_msd_na[2]
+variable msd_na3 equal c_msd_na[3]
+variable msd_na4 equal c_msd_na[4]
+
+variable msd_cl1 equal c_msd_cl[1]
+variable msd_cl2 equal c_msd_cl[2]
+variable msd_cl3 equal c_msd_cl[3]
+variable msd_cl4 equal c_msd_cl[4]
+
+# === Output MSDs
+fix msdout_water all ave/time 1 1 1 v_msd1 v_msd2 v_msd3 v_msd4 file ${WORKDIR}/msd.dat/msd_water_${EXPNAME}.dat mode scalar
+fix msdout_na    all ave/time 1 1 1 v_msd_na1 v_msd_na2 v_msd_na3 v_msd_na4 file ${WORKDIR}/msd.dat/msd_na_${EXPNAME}.dat mode scalar
+fix msdout_cl    all ave/time 1 1 1 v_msd_cl1 v_msd_cl2 v_msd_cl3 v_msd_cl4 file ${WORKDIR}/msd.dat/msd_cl_${EXPNAME}.dat mode scalar
+
+# === Rerun trajectory
+rerun ${WRAPPED_FILE} first 0 every 1000 dump x y z ix iy iz box yes
+
+run 0
